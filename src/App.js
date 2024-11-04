@@ -1,5 +1,5 @@
-// src/App.js
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header.js';
 import Etapas from './components/Etapas.js';
 
