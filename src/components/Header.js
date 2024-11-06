@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function Header({ pontos }) {
   return (
@@ -9,5 +10,9 @@ function Header({ pontos }) {
     </header>
   );
 }
+
+Header.propTypes = {
+  pontos: PropTypes.number.isRequired,
+};
 
 export default Header;

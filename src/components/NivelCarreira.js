@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-function NivelCarreira({ titulo, objetivo, requisitos, subniveis, atualizarPontos }) {
+function NivelCarreira({
+  titulo,
+  objetivo,
+  requisitos,
+  subniveis,
+  atualizarPontos,
+}) {
   const [completas, setCompletas] = useState([]);
 
   const marcarComoCompleta = (index) => {
@@ -35,30 +42,41 @@ function NivelCarreira({ titulo, objetivo, requisitos, subniveis, atualizarPonto
           </ul>
         )}
 
-        {subniveis && subniveis.map((subnivel, subIndex) => (
-          <div key={subIndex} className="subnivel mt-3">
-            <h4>{subnivel.titulo}</h4>
-            <ul className="list-group list-group-flush">
-              {subnivel.requisitos.map((requisito, reqIndex) => (
-                <li
-                  key={reqIndex}
-                  className={`list-group-item ${completas.includes(`${subIndex}-${reqIndex}`) ? 'text-decoration-line-through' : ''}`}
-                >
-                  <input
-                    type="checkbox"
-                    className="form-check-input me-2"
-                    onClick={() => marcarComoCompleta(`${subIndex}-${reqIndex}`)}
-                    disabled={completas.includes(`${subIndex}-${reqIndex}`)}
-                  />
-                  {requisito}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {subniveis &&
+          subniveis.map((subnivel, subIndex) => (
+            <div key={subIndex} className="subnivel mt-3">
+              <h4>{subnivel.titulo}</h4>
+              <ul className="list-group list-group-flush">
+                {subnivel.requisitos.map((requisito, reqIndex) => (
+                  <li
+                    key={reqIndex}
+                    className={`list-group-item ${completas.includes(`${subIndex}-${reqIndex}`) ? 'text-decoration-line-through' : ''}`}
+                  >
+                    <input
+                      type="checkbox"
+                      className="form-check-input me-2"
+                      onClick={() =>
+                        marcarComoCompleta(`${subIndex}-${reqIndex}`)
+                      }
+                      disabled={completas.includes(`${subIndex}-${reqIndex}`)}
+                    />
+                    {requisito}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
       </div>
     </div>
   );
 }
+
+NivelCarreira.propTypes = {
+  titulo: PropTypes.string.isRequired,
+  objetivo: PropTypes.string,
+  requisitos: PropTypes.arrayOf(PropTypes.string),
+  subniveis: PropTypes.arrayOf(PropTypes.object),
+  atualizarPontos: PropTypes.func.isRequired,
+};
 
 export default NivelCarreira;
