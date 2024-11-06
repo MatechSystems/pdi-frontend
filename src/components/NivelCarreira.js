@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function NivelCarreira({ titulo, objetivo, requisitos, subniveis }) {
+function NivelCarreira({ titulo, objetivo, requisitos, subniveis, atualizarPontos }) {
+  const [completas, setCompletas] = useState([]);
+
+  const marcarComoCompleta = (index) => {
+    if (!completas.includes(index)) {
+      setCompletas([...completas, index]);
+      atualizarPontos(10);
+    }
+  };
+
   return (
     <div className="nivel-carreira card my-4 w-75 mx-auto">
       <div className="card-body">
@@ -10,21 +19,37 @@ function NivelCarreira({ titulo, objetivo, requisitos, subniveis }) {
         {requisitos && (
           <ul className="list-group list-group-flush">
             {requisitos.map((requisito, index) => (
-              <li key={index} className="list-group-item">
-                <input type="checkbox" className="form-check-input me-2" />
+              <li
+                key={index}
+                className={`list-group-item ${completas.includes(index) ? 'text-decoration-line-through' : ''}`}
+              >
+                <input
+                  type="checkbox"
+                  className="form-check-input me-2"
+                  onClick={() => marcarComoCompleta(index)}
+                  disabled={completas.includes(index)}
+                />
                 {requisito}
               </li>
             ))}
           </ul>
         )}
 
-        {subniveis && subniveis.map((subnivel, index) => (
-          <div key={index} className="subnivel mt-3">
+        {subniveis && subniveis.map((subnivel, subIndex) => (
+          <div key={subIndex} className="subnivel mt-3">
             <h4>{subnivel.titulo}</h4>
             <ul className="list-group list-group-flush">
-              {subnivel.requisitos.map((requisito, subIndex) => (
-                <li key={subIndex} className="list-group-item">
-                  <input type="checkbox" className="form-check-input me-2" />
+              {subnivel.requisitos.map((requisito, reqIndex) => (
+                <li
+                  key={reqIndex}
+                  className={`list-group-item ${completas.includes(`${subIndex}-${reqIndex}`) ? 'text-decoration-line-through' : ''}`}
+                >
+                  <input
+                    type="checkbox"
+                    className="form-check-input me-2"
+                    onClick={() => marcarComoCompleta(`${subIndex}-${reqIndex}`)}
+                    disabled={completas.includes(`${subIndex}-${reqIndex}`)}
+                  />
                   {requisito}
                 </li>
               ))}

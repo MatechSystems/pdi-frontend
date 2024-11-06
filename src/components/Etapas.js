@@ -1,7 +1,7 @@
 import React from "react";
 import NivelCarreira from "./NivelCarreira";
 
-function Etapas() {
+function Etapas({ atualizarPontos }) {
   const niveis = [
     {
       titulo: "Start - Entrando no mundo Tech",
@@ -71,6 +71,7 @@ function Etapas() {
           objetivo={nivel.objetivo}
           requisitos={nivel.requisitos}
           subniveis={nivel.subniveis}
+          atualizarPontos={atualizarPontos}
         />
       ))}
     </div>
@@ -78,4 +79,5 @@ function Etapas() {
 }
 
 export default Etapas;
+
 
