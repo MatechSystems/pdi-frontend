@@ -8,12 +8,9 @@ function App() {
 
   const atualizarPontos = (valor) => {
     setPontos(pontos + valor);
-
   };
 
-  useEffect(() => {
-
-  }, [pontos]);
+  useEffect(() => {}, [pontos]);
 
   return (
     <div>
