@@ -36,7 +36,7 @@ function NivelCarreira({
                   onClick={() => marcarComoCompleta(index)}
                   disabled={completas.includes(index)}
                 />
-                {requisito}
+                {requisito.titulo}
               </li>
             ))}
           </ul>
@@ -60,7 +60,7 @@ function NivelCarreira({
                       }
                       disabled={completas.includes(`${subIndex}-${reqIndex}`)}
                     />
-                    {requisito}
+                    {requisito.titulo}
                   </li>
                 ))}
               </ul>
