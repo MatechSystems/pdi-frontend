@@ -1,19 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 
-function NivelCarreira({ nivel, atualizarPontos }) {
-  const [completas, setCompletas] = useState([]);
+function NivelCarreira({ nivel, atualizarPontos, handleSetNiveis }) {
+  const marcarComoCompleta = (eventoHTML, requisitoId) => {
+    handleSetNiveis((prevNiveis) => {
+      const newNiveis = [...prevNiveis];
+      console.log(newNiveis);
 
-  const marcarComoCompleta = (eventoHTML, liIndex, requisitoId, nivelID) => {
-    console.log('checked', eventoHTML.target.checked);
-    console.log('requisitoId', requisitoId);
-    console.log('nivelId', nivelID);
+      const nivelPosition = newNiveis.find((nivel) => nivel.id);
+      console.log(nivelPosition);
 
-    if (!completas.includes(liIndex)) {
-      setCompletas([...completas, liIndex]);
-      atualizarPontos(10);
-    }
+      nivelPosition.requisitos.find((requisito) => {
+        if (requisito.id === requisitoId) {
+          requisito.feito = eventoHTML.target.checked;
+        }
+      });
+
+      console.log(nivelPosition);
+
+      return [...prevNiveis, nivelPosition];
+    });
+
+    atualizarPontos(10);
   };
 
   return (
@@ -22,49 +31,42 @@ function NivelCarreira({ nivel, atualizarPontos }) {
         <h2 className="card-title">{nivel.titulo}</h2>
         {nivel.objetivo && <p className="card-text">{nivel.objetivo}</p>}
 
-        {nivel.requisitos && (
-          <ul className="list-group list-group-flush">
-            {nivel.requisitos.map((requisito, index) => (
-              <li
-                key={index}
-                className={`list-group-item ${completas.includes(index) ? 'text-decoration-line-through' : ''}`}
-              >
-                <Form.Check
-                  type="checkbox"
-                  label={requisito.titulo}
-                  checked={requisito.feito}
-                  onChange={(e) =>
-                    marcarComoCompleta(e, index, requisito.id, nivel.id)
-                  }
-                />
-              </li>
-            ))}
-          </ul>
-        )}
+        <Form>
+          {nivel.requisitos && (
+            <ul className="list-group list-group-flush">
+              {nivel.requisitos.map((requisito, index) => (
+                <li key={index} className="list-group-item">
+                  <Form.Check
+                    // id={`${nivel.id}-${requisito.id}`}
+                    type="checkbox"
+                    label={requisito.titulo}
+                    checked={requisito.feito}
+                    onChange={(e) => marcarComoCompleta(e, requisito.id)}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
 
-        {nivel.subniveis &&
-          nivel.subniveis.map((subnivel, subIndex) => (
-            <div key={subIndex} className="subnivel mt-3">
-              <h4>{subnivel.titulo}</h4>
-              <ul className="list-group list-group-flush">
-                {subnivel.requisitos.map((requisito, reqIndex) => (
-                  <li
-                    key={reqIndex}
-                    className={`list-group-item ${completas.includes(`${subIndex}-${reqIndex}`) ? 'text-decoration-line-through' : ''}`}
-                  >
-                    <Form.Check
-                      type="checkbox"
-                      label={requisito.titulo}
-                      checked={requisito.feito}
-                      onChange={(e) =>
-                        marcarComoCompleta(e, reqIndex, requisito.id, nivel.id)
-                      }
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {nivel.subniveis &&
+            nivel.subniveis.map((subnivel, subIndex) => (
+              <div key={subIndex} className="subnivel mt-3">
+                <h4>{subnivel.titulo}</h4>
+                <ul className="list-group list-group-flush">
+                  {subnivel.requisitos.map((requisito, reqIndex) => (
+                    <li key={reqIndex} className="list-group-item">
+                      <Form.Check
+                        type="checkbox"
+                        label={requisito.titulo}
+                        checked={requisito.feito}
+                        onChange={(e) => marcarComoCompleta(e, requisito.id)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+        </Form>
       </div>
     </div>
   );
@@ -73,6 +75,7 @@ function NivelCarreira({ nivel, atualizarPontos }) {
 NivelCarreira.propTypes = {
   nivel: PropTypes.object.isRequired,
   atualizarPontos: PropTypes.func.isRequired,
+  handleSetNiveis: PropTypes.func.isRequired,
 };
 
 export default NivelCarreira;

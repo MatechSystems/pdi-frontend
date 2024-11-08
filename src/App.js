@@ -47,27 +47,27 @@ function App() {
       requisitos: [
         {
           id: 1,
-          feito: false,
+          feito: true,
           titulo: 'Conhecimento básico em HTML, CSS e JavaScript',
         },
         {
           id: 2,
-          feito: false,
+          feito: true,
           titulo: 'Familiaridade com Git e controle de versão',
         },
         {
           id: 3,
-          feito: false,
+          feito: true,
           titulo: 'Comunicação eficaz e trabalho em equipe',
         },
         {
           id: 4,
-          feito: false,
+          feito: true,
           titulo: 'Capacidade de seguir instruções e trabalhar sob supervisão',
         },
         {
           id: 5,
-          feito: false,
+          feito: true,
           titulo: 'Conclusão de tarefas básicas com orientação',
         },
       ],
@@ -82,23 +82,23 @@ function App() {
           requisitos: [
             {
               id: 1,
-              feito: false,
+              feito: true,
               titulo: 'Conhecimento básico em HTML, CSS e JavaScript',
             },
             {
               id: 2,
-              feito: false,
+              feito: true,
               titulo:
                 'Primeiras experiências com Git, como criar branches e commits',
             },
             {
               id: 3,
-              feito: false,
+              feito: true,
               titulo: 'Participação em reuniões e boa comunicação em equipe',
             },
             {
               id: 4,
-              feito: false,
+              feito: true,
               titulo: 'Realização de tarefas com suporte do time',
             },
           ],
