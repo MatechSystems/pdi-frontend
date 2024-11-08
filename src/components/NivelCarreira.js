@@ -2,19 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 
-function NivelCarreira({
-  titulo,
-  objetivo,
-  requisitos,
-  subniveis,
-  atualizarPontos,
-  //setRequisitos
-}) {
+function NivelCarreira({ nivel, atualizarPontos }) {
   const [completas, setCompletas] = useState([]);
 
-  const marcarComoCompleta = (eventoHTML, liIndex, requisitoId) => {
+  const marcarComoCompleta = (eventoHTML, liIndex, requisitoId, nivelID) => {
     console.log('checked', eventoHTML.target.checked);
     console.log('requisitoId', requisitoId);
+    console.log('nivelId', nivelID);
 
     // encontrar o objeto requisito dentro do array de requisitosusando o requisitoID
     // alterar o "feito" do objeto (requisito) para o valor do target.checked
@@ -33,12 +27,12 @@ function NivelCarreira({
   return (
     <div className="nivel-carreira card my-4 w-75 mx-auto">
       <div className="card-body">
-        <h2 className="card-title">{titulo}</h2>
-        {objetivo && <p className="card-text">{objetivo}</p>}
+        <h2 className="card-title">{nivel.titulo}</h2>
+        {nivel.objetivo && <p className="card-text">{nivel.objetivo}</p>}
 
-        {requisitos && (
+        {nivel.requisitos && (
           <ul className="list-group list-group-flush">
-            {requisitos.map((requisito, index) => (
+            {nivel.requisitos.map((requisito, index) => (
               <li
                 key={index}
                 className={`list-group-item ${completas.includes(index) ? 'text-decoration-line-through' : ''}`}
@@ -54,15 +48,17 @@ function NivelCarreira({
                   type="checkbox"
                   label={requisito.titulo}
                   checked={requisito.feito}
-                  onChange={(e) => marcarComoCompleta(e, index, requisito.id)}
+                  onChange={(e) =>
+                    marcarComoCompleta(e, index, requisito.id, nivel.id)
+                  }
                 />
               </li>
             ))}
           </ul>
         )}
 
-        {subniveis &&
-          subniveis.map((subnivel, subIndex) => (
+        {nivel.subniveis &&
+          nivel.subniveis.map((subnivel, subIndex) => (
             <div key={subIndex} className="subnivel mt-3">
               <h4>{subnivel.titulo}</h4>
               <ul className="list-group list-group-flush">
@@ -76,7 +72,7 @@ function NivelCarreira({
                       label={requisito.titulo}
                       checked={requisito.feito}
                       onChange={(e) =>
-                        marcarComoCompleta(e, reqIndex, requisito.id)
+                        marcarComoCompleta(e, reqIndex, requisito.id, nivel.id)
                       }
                     />
                   </li>
@@ -90,10 +86,7 @@ function NivelCarreira({
 }
 
 NivelCarreira.propTypes = {
-  titulo: PropTypes.string.isRequired,
-  objetivo: PropTypes.string,
-  requisitos: PropTypes.arrayOf(PropTypes.string),
-  subniveis: PropTypes.arrayOf(PropTypes.object),
+  nivel: PropTypes.object.isRequired,
   atualizarPontos: PropTypes.func.isRequired,
 };
 
