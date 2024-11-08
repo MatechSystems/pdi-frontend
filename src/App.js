@@ -177,7 +177,7 @@ function App() {
   return (
     <div>
       <Header pontos={pontos} />
-      <Etapas atualizarPontos={atualizarPontos} niveis={niveis} />
+      <Etapas atualizarPontos={atualizarPontos} niveisProp={niveis} />
     </div>
   );
 }

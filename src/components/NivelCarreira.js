@@ -10,19 +10,11 @@ function NivelCarreira({ nivel, atualizarPontos }) {
     console.log('requisitoId', requisitoId);
     console.log('nivelId', nivelID);
 
-    // encontrar o objeto requisito dentro do array de requisitosusando o requisitoID
-    // alterar o "feito" do objeto (requisito) para o valor do target.checked
-    // atualizar o requisitoS usando o setRequisitos setRequisitos(prev => [...prev, requisito])
-
     if (!completas.includes(liIndex)) {
       setCompletas([...completas, liIndex]);
       atualizarPontos(10);
     }
   };
-
-  // const handleCheckboxChange = (e) => {
-  //   setIsChecked(e.target.checked);
-  // };
 
   return (
     <div className="nivel-carreira card my-4 w-75 mx-auto">
@@ -37,13 +29,6 @@ function NivelCarreira({ nivel, atualizarPontos }) {
                 key={index}
                 className={`list-group-item ${completas.includes(index) ? 'text-decoration-line-through' : ''}`}
               >
-                {/* <input
-                  type="checkbox"
-                  className="form-check-input me-2"
-                  onClick={() => marcarComoCompleta(index)}
-                  disabled={completas.includes(index)}
-                /> */}
-                {/* {requisito.titulo} */}
                 <Form.Check
                   type="checkbox"
                   label={requisito.titulo}
